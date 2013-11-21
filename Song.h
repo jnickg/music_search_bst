@@ -45,8 +45,14 @@ public:
 	int getArtist(char * & art) const;
 	// Copies to alb the album of the instance
 	int getAlbum(char * & alb) const;
-	// Copies to ply the playlist of the instance
-	int getPlaylist(jnickg::adt::List<char*> & ply) const;
+
+	int retrieve(char* srch, Song & rtn) const;
+	// If song has this title, copies all data to rtn
+	int retTitle(char* tit, Song & rtn) const;
+	// If song has this artist, copies all data to rtn
+	int retArtist(char* art, Song & rtn) const;
+	// If song has this album, copies all data to rtn
+	int retAlbum(char* alb, Song & rtn) const;
 
 	// Prints all data
 	std::ostream& print(std::ostream & out) const;

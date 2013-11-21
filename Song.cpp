@@ -111,6 +111,45 @@ int Song::getAlbum(char * & alb) const
 	}
 	else return 0;
 }
+
+int Song::retrieve(char* srch, Song & rtn) const
+{
+	// Searches through all of Song's data for a match
+	if(retTitle(srch, rtn) | retArtist(srch, rtn) | retAlbum(srch, rtn))
+		return 1;
+	else return 0;
+}
+
+int Song::retTitle(char* tit, Song & rtn) const
+{
+	if(strcmp(tit, title)==0)
+	{
+		rtn.setSongFrom(title, artist, album, length);
+		return 1;
+	}
+	else return 0;
+}
+
+int Song::retArtist(char* art, Song & rtn) const
+{
+	if(strcmp(art, artist)==0)
+	{
+		rtn.setSongFrom(title, artist, album, length);
+		return 1;
+	}
+	else return 0;
+}
+
+int Song::retAlbum(char* alb, Song & rtn) const
+{
+	if(strcmp(alb, album)==0)
+	{
+		rtn.setSongFrom(title, artist, album, length);
+		return 1;
+	}
+	else return 0;
+}
+
 	
 // Prints all data
 std::ostream& Song::print(std::ostream & out) const

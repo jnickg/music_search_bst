@@ -41,6 +41,7 @@ public:
 	int addSong(const Song & song);
 	// Spits out a string representation of the Playlist
 	int toStr(char * & ts) const;
+
 	// Iterates through songs and prints each
 	std::ostream& print(std::ostream & out) const;
 

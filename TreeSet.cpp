@@ -29,6 +29,11 @@ template <class T> bool TreeSet<T>::contains(T& item) const
 	return contains(item, root);
 }
 
+template <class T> int TreeSet<T>::retrieve(char* srch, jnickg::adt::List<T>& rtn) const
+{
+	return retrieve(srch, rtn, root);
+}
+
 template <class T> int TreeSet<T>::getfirst(T& rtn) const
 {
 	return getfirst(rtn, root);
@@ -172,6 +177,22 @@ template <class T> bool TreeSet<T>::contains(T& item, bst_node<T> * root) const
 	}
 }
 
+template <class T> int TreeSet<T>::retrieve(char* srch, jnickg::adt::List<T>& rtn, bst_node<T> * root) const
+{
+	if(NULL==root) return 0;
+	else
+	{
+		int num = retrieve(srch, rtn, root->left) + retrieve(srch, rtn, root->right);
+		T tmp;
+		if (root->data).retrieve(srch, tmp)
+		{
+			rtn.add_to_end(tmp);
+			num++;
+		}
+		return num;
+	}
+}
+
 template <class T> int TreeSet<T>::getfirst(T& rtn, bst_node<T> * root) const
 {
 	// Case 1: no root
@@ -181,7 +202,6 @@ template <class T> int TreeSet<T>::getfirst(T& rtn, bst_node<T> * root) const
 	{
 		rtn = root->data;
 		return 1;
-
 	}
 	// Case 3: continue traversing
 	else getfirst(rtn, root->left);

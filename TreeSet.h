@@ -38,6 +38,7 @@ template <class T> struct bst_node
 	operator=
 	operator<<
 	operator==
+	retrieve(char* search, T& item) const
 
 */
 
@@ -58,6 +59,9 @@ template <class T> class TreeSet
 
 	// Checks if the TreeSet contains item and sets item to it
 	bool contains(T& item) const;
+
+	// Copies to rtn all retrieved items from the search string
+	int retrieve(char* srch, jnickg::adt::List<T>& rtn) const;
 
 	// Sets rtn to the lowest T in the instance,
 	// or NULL if not present
@@ -119,6 +123,8 @@ private:
 	int put(T& data, bst_node<T> * root);
 	// Checks if the TreeSet contains item and sets item to it
 	bool contains(T& item, bst_node<T> * root) const;
+	// Copies to rtn all retrieved items from the search string in postorder
+	int retrieve(char* srch, jnickg::adt::List<T>& rtn, bst_node<T>* root) const;
 	// Sets rtn to the leftmost data under root
 	int getfirst(T& rtn, bst_node<T> * root) const;
 	// Sets rtn to the rightmost data under root
