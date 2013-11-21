@@ -252,6 +252,17 @@ template <class T> int List<T>::fget_count(node<T>* strt)
 	return (fget_count(strt->next) +1);
 }
 
+template <class T> bool List<T>::contains(const T & item) const
+{
+	node<T> tmp = head;
+	while(tmp)
+	{
+		if (tmp->data == item) return true;
+		tmp = tmp->next;
+	}
+	return false;
+}
+
 template <class T> List<T>& List<T>::operator=(const List<T> & right)
 {
 	// Clear all of this

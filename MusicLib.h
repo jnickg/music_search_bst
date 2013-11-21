@@ -2,9 +2,9 @@
 #define JNICKG_MUSICLIB
 
 #include "Song.h"
-#include "Album.h"
 #include "List.h"
 #include "TreeSet.h"
+#include "Playlist.h"
 
 namespace jnickg { namespace adt {
 #ifndef BSTSTRUCT
@@ -41,27 +41,24 @@ public:
 	// music library
 	int cpyToLib(Song & nSong);
 
+	// Creates an empty playlist with a title
+	int createPlaylist(char * playlist);
 
+	// Adds song to existing playlist or creates a new one and adds song to it
+	int addtoPlaylist(Song & song, char* playlist);
 
 	// Searches for artist and copies existing albums to result
 	int getByArtist(char* artist, jnickg::adt::List<Song> & result);
-
 	// Searches for album and copies existing songs to result
-	int getByAlbum(char* album, Album & result);
+	int getByAlbum(char* album, jnickg::adt::List<Song> & result);
+	// Searches for a playlist and copies existing songs to result
+	int getByPlaylist(char * playlist, jnickg::adt::List<Song> & result);
 private:
-	int artS; // size of the artist table
-	int albS; // size of the album table
+	char* name;
 	/* Hash Tables */
 	jnickg::adt::TreeSet<Song> songs;
+	jnickg::adt::TreeSet<Playlist> playlists;
 	
-	// Hashes the string input in a standard way.
-	int hash(char* str);
-
-	// Adds nSong to artistTable; chains if needed
-	int addByArtist(char* artist, Song & nSong);
-
-	// Adds nSong to albumTable; chains if needed
-	int addByAlbum(char* album, Song & nSong);
 };
 
 #endif

@@ -86,6 +86,8 @@ public:
 	// Forces a re-count of nodes and returns that; does not reset node count
 	int fget_count();
 
+	bool contains(const T & item) const;
+
 	List<T>& operator=(const List<T> & right);
 private:
 	node<T>* head; // The head

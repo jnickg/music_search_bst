@@ -14,37 +14,47 @@ template <class T> TreeSet<T>::~TreeSet(void)
 
 /* Primary functions */
 
-template <class T> int TreeSet<T>::add(T data)
+template <class T> int TreeSet<T>::add(T& data)
 {
 	return add(data, root);
 }
 
-template <class T> int TreeSet<T>::getfirst(T& rtn)
+template <class T> int TreeSet<T>::put(T& data)
+{
+	return put(data, root);
+}
+
+template <class T> bool TreeSet<T>::contains(T& item) const
+{
+	return contains(item, root);
+}
+
+template <class T> int TreeSet<T>::getfirst(T& rtn) const
 {
 	return getfirst(rtn, root);
 }
 
-template <class T> int TreeSet<T>::getlast(T& rtn)
+template <class T> int TreeSet<T>::getlast(T& rtn) const
 {
 	return getlast(rtn, root);
 }
 
-template <class T> int TreeSet<T>::getceil(T t, T& rtn)
+template <class T> int TreeSet<T>::getceil(const T& t, T& rtn) const
 {
 	return getceil(t, rtn, root);
 }
 
-template <class T> int TreeSet<T>::getflr(T t, T& rtn)
+template <class T> int TreeSet<T>::getflr(const T& t, T& rtn) const
 {
 	return getflr(t, rtn, root);
 }
 
-template <class T> int TreeSet<T>::gethigher(T t, T& rtn)
+template <class T> int TreeSet<T>::gethigher(const T& t, T& rtn) const
 {
 	return gethigher(t, rtn, root);
 }
 
-template <class T> int TreeSet<T>::getlower(T t, T& rtn)
+template <class T> int TreeSet<T>::getlower(const T& t, T& rtn) const
 {
 	return getlower(t, rtn, root);
 }
@@ -52,17 +62,17 @@ template <class T> int TreeSet<T>::getlower(T t, T& rtn)
 
 /* Utility functions (wrappers) */
 
-template <class T> int TreeSet<T>::count(void)
+template <class T> int TreeSet<T>::count(void) const
 {
 	return count(root);
 }
 
-template <class T> int TreeSet<T>::countleaves(void)
+template <class T> int TreeSet<T>::countleaves(void) const
 {
 	return countleaves(root);
 }
 
-template <class T> int TreeSet<T>::height(void)
+template <class T> int TreeSet<T>::height(void) const
 {
 	return height(root);
 }
@@ -78,16 +88,33 @@ template <class T> int TreeSet<T>::clear(void)
 	return removeall(root);
 }
 
+template <class T> int TreeSet<T>::toList(List<T> & rtn)  const
+{
+	rtn.clear();
+	return toList(rtn, root);
+}
+
+// Prints each element in the set, in their natural order
+template <class T> std::ostream& TreeSet<T>::print(std::ostream& out) const
+{
+	return print(out, root);
+}
+
+template <class T> TreeSet<T>& TreeSet<T>::operator=(const TreeSet<T> & right)
+{
+	copyfrom(right);
+	return *this;
+}
 
 
 
 /* Private wrapped functions */
 
-template <class T> int TreeSet<T>::add(T data, node<T> * root)
+template <class T> int TreeSet<T>::add(T& data, bst_node<T> * root)
 {
 	if(NULL==root) // Case 1: root is a leaf
 	{
-		root = new node<T>;
+		root = new bst_node<T>;
 		root->data = data;
 		root->left = NULL;
 		root->right = NULL;
@@ -104,11 +131,52 @@ template <class T> int TreeSet<T>::add(T data, node<T> * root)
 	}
 }
 
-template <class T> int TreeSet<T>::getfirst(T& rtn, node<T> * root)
+template <class T> int TreeSet<T>::put(T& data, bst_node<T> * root)
+{
+	if(NULL==root) // Case 1: root is a leaf
+	{
+		root = new bst_node<T>;
+		root->data = data;
+		root->left = NULL;
+		root->right = NULL;
+		return 1;
+	}
+	else // Case 2: root contains data
+	{
+		// Add to the left of root
+		if(data<(root->data)) return add(data, root->left);
+		// Add to the right of root
+		else if(data>(root->data)) return add(data, root->right);
+		// Already here; do not add to the set
+		else if(data==(root->data))
+		{
+			root->data = data;
+			return 0;
+		}
+	}
+}
+
+
+template <class T> bool TreeSet<T>::contains(T& item, bst_node<T> * root) const
+{
+	if(NULL == root) return false;
+	else
+	{
+		if(item < root->data) return contains(item, root->left);
+		else if(item > root->data) return contains(item, root->right);
+		else
+		{
+			item = root->item;
+			return true;
+		}
+	}
+}
+
+template <class T> int TreeSet<T>::getfirst(T& rtn, bst_node<T> * root) const
 {
 	// Case 1: no root
 	if(NULL==root) return 0;
-	// Case 2: at the leftmost node
+	// Case 2: at the leftmost bst_node
 	else if(NULL==root->left)
 	{
 		rtn = root->data;
@@ -119,11 +187,11 @@ template <class T> int TreeSet<T>::getfirst(T& rtn, node<T> * root)
 	else getfirst(rtn, root->left);
 }
 
-template <class T> int TreeSet<T>::getlast(T& rtn, node<T> * root)
+template <class T> int TreeSet<T>::getlast(T& rtn, bst_node<T> * root) const
 {
 	// Case 1: no root
 	if(NULL==root) return 0;
-	// Case 2: at the leftmost node
+	// Case 2: at the leftmost bst_node
 	else if(NULL==root->right)
 	{
 		rtn = root->data;
@@ -133,7 +201,7 @@ template <class T> int TreeSet<T>::getlast(T& rtn, node<T> * root)
 	else getfirst(rtn, root->left);
 }
 
-template <class T> int TreeSet<T>::getceil(T t, T& rtn, node<T> * root)
+template <class T> int TreeSet<T>::getceil(const T& t, T& rtn, bst_node<T> * root) const
 {
 	// Case 1: no root
 	if(NULL==root) return 0;
@@ -165,7 +233,7 @@ template <class T> int TreeSet<T>::getceil(T t, T& rtn, node<T> * root)
 	}
 }
 
-template <class T> int TreeSet<T>::getflr(T t, T& rtn node<T> * root)
+template <class T> int TreeSet<T>::getflr(const T& t, T& rtn bst_node<T> * root) const
 {
 	// Case 1: no root
 	if(NULL==root) return 0;
@@ -197,7 +265,7 @@ template <class T> int TreeSet<T>::getflr(T t, T& rtn node<T> * root)
 	}
 }
 
-template <class T> int TreeSet<T>::gethigher(T t, T& rtn, node<T> * root)
+template <class T> int TreeSet<T>::gethigher(const T& t, T& rtn, bst_node<T> * root) const
 {
 	// Case 1: no root
 	if(NULL==root) return 0;
@@ -221,7 +289,7 @@ template <class T> int TreeSet<T>::gethigher(T t, T& rtn, node<T> * root)
 	}
 }
 
-template <class T> int TreeSet<T>::getlower(T t, T& rtn node<T> * root)
+template <class T> int TreeSet<T>::getlower(const T& t, T& rtn bst_node<T> * root) const
 {
 	// Case 1: no root
 	if(NULL==root) return 0;
@@ -245,13 +313,13 @@ template <class T> int TreeSet<T>::getlower(T t, T& rtn node<T> * root)
 	}
 }
 
-template <class T> int TreeSet<T>::count(node<T> * root)
+template <class T> int TreeSet<T>::count(bst_node<T> * root) const
 {
 	if(NULL==root) return 0; // Case 1: no root
 	else return (1 + count(root->left) + count(root->right));
 }
 
-template <class T> int TreeSet<T>::countleaves(node<T> * root)
+template <class T> int TreeSet<T>::countleaves(bst_node<T> * root) const
 {
 	if(NULL==root) return 0; // Case 1: no root
 	else if(((root->left)==NULL) && ((root->right)==NULL))
@@ -259,7 +327,7 @@ template <class T> int TreeSet<T>::countleaves(node<T> * root)
 	else return (count(root->left) + count(root->right));
 }
 
-template <class T> int TreeSet<T>::height(node<T> * root)
+template <class T> int TreeSet<T>::height(bst_node<T> * root) const
 {
 	if(NULL==root) return 0; // Case 1: no root
 	else // Case 2: at least a left or right exists
@@ -271,7 +339,7 @@ template <class T> int TreeSet<T>::height(node<T> * root)
 	}
 }
 
-template <class T> int TreeSet<T>::copyfrom(node<T> * & dest, node<T> * src)
+template <class T> int TreeSet<T>::copyfrom(bst_node<T> * & dest, bst_node<T> * src)
 {
 	if(NULL==source)
 	{
@@ -281,14 +349,14 @@ template <class T> int TreeSet<T>::copyfrom(node<T> * & dest, node<T> * src)
 	else
 	{
 		if(destination) delete destination;
-		destination = new node;
+		destination = new bst_node;
 		destination->data = source->data;
 		int cpy = copy(destination->left, source->left) + copy(destination->right, source->right);
 		return 1 + cpy;
 	}
 }
 
-template <class T> int TreeSet<T>::removeall(node<T> * & root)
+template <class T> int TreeSet<T>::removeall(bst_node<T> * & root)
 {
 	if(NULL==root) return 0;
 	else
@@ -297,5 +365,29 @@ template <class T> int TreeSet<T>::removeall(node<T> * & root)
 		delete root;
 		root = NULL;
 		return 1 + del;
+	}
+}
+
+template <class T> int TreeSet<T>::toList(List<T> & rtn, bst_node<T> * root) const
+{
+	if(NULL==root) return 0;
+	else
+	{
+		int adds = 0;
+		adds += toList(rtn, root->left);
+		rtn.add_to_end(root->data);
+		adds += toList(rtn, root->right);
+		return 1 + adds;
+	}
+}
+
+template <class T> std::ostream& TreeSet<T>::print(std::ostream& out, bst_node<T> * root) const
+{
+	if(NULL==root) return out;
+	else
+	{
+		print(out, root->left);
+		out << &(root->data) << std::endl;
+		print(out, root->right);
 	}
 }

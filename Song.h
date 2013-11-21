@@ -34,8 +34,6 @@ public:
 
 	// Sets all the data to this, from params
 	int setSongFrom(char* t, char* ar, char* al, int l);
-	// Sets all the data to this, from params
-	int setSongFrom(char* t, char* ar, char* al, int l, jnickg::adt::List<char*> ply);
 	// Copies all data to this, from that
 	int copySongFrom(const Song& that);
 	// Copies all data from this, to that
@@ -63,7 +61,6 @@ private:
 	char* title; // The title of the song
 	char* artist; // The artist who made the song
 	char* album; // The album the song is in
-	//jnickg::adt::List<char*> playlists; // The playlists in which the song appears
 	int length; // The length (in seconds) of the song
 
 	// Invokes the Song's print function
