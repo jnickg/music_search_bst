@@ -4,16 +4,18 @@
 #include "Song.h"
 #include "Album.h"
 #include "List.h"
+#include "TreeSet.h"
 
 namespace jnickg { namespace adt {
-#ifndef LLSTRUCT
-#define LLSTRUCT
-template <class T> struct node
+#ifndef BSTSTRUCT
+#define BSTSTRUCT
+template <class T> struct bst_node
 {
 	T data;
-	node<T>* next;
+	node<T>* left;
+	node<T>* right;
 };
-#endif // LLSTRUCT
+#endif // BSTSTRUCT
 }} // end namespace
 
 /* MUSIC LIBRARY
@@ -50,8 +52,7 @@ private:
 	int artS; // size of the artist table
 	int albS; // size of the album table
 	/* Hash Tables */
-	jnickg::adt::node < jnickg::adt::List < Song > > ** artistTable; // Each list is named after the artist
-	jnickg::adt::node < Album > ** albumTable; // Each album knows its own name
+	jnickg::adt::TreeSet<Song> songs;
 	
 	// Hashes the string input in a standard way.
 	int hash(char* str);
