@@ -52,7 +52,7 @@ template <class T> class TreeSet
 	/* Primary functions */
 	
 	// Adds data to the instance
-	int add(T& data);
+	int add(const T& data);
 
 	// Adds data regardless of whether something was already there
 	int put(T& data);
@@ -118,7 +118,7 @@ private:
 	/* Primary wrapped functions */
 
 	// Adds data appropriately below root
-	int add(T& data, bst_node<T> * root);
+	int add(const T& data, bst_node<T> * root);
 	// Adds data regardless of whether something was already there
 	int put(T& data, bst_node<T> * root);
 	// Checks if the TreeSet contains item and sets item to it
@@ -128,7 +128,7 @@ private:
 	// Sets rtn to the leftmost data under root
 	int getfirst(T& rtn, bst_node<T> * root) const;
 	// Sets rtn to the rightmost data under root
-	int getfirst(T& rtn, bst_node<T> * root) const;
+	int getlast(T& rtn, bst_node<T> * root) const;
 
 	int getceil(const T& t, T& rtn, bst_node<T> * root) const;
 
@@ -140,6 +140,8 @@ private:
 
 	/* Utility wrapped functions */
 
+	// Returns number of leaves below root
+	int count (bst_node<T> * root) const;
 	// Returns number of leaves below root
 	int countleaves (bst_node<T> * root) const;
 	// Returns depth of the tree from root

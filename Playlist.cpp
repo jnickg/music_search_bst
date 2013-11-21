@@ -97,6 +97,18 @@ Playlist& Playlist::operator=(const Playlist & right)
 	return *this;
 }
 
+bool Playlist::operator<(const Playlist & right) const
+{
+	if(strcmp(title, right.title) < 0) return true;
+	else return false;
+}
+
+bool Playlist::operator>(const Playlist & right) const
+{
+	if(strcmp(title, right.title) > 0) return true;
+	else return false;
+}
+
 bool Playlist::operator==(const Playlist & right) const
 {
 	if (strcmp(title, right.title)==0) return true;

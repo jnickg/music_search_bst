@@ -14,7 +14,7 @@ template <class T> TreeSet<T>::~TreeSet(void)
 
 /* Primary functions */
 
-template <class T> int TreeSet<T>::add(T& data)
+template <class T> int TreeSet<T>::add(const T& data)
 {
 	return add(data, root);
 }
@@ -95,7 +95,7 @@ template <class T> int TreeSet<T>::clear(void)
 
 template <class T> int TreeSet<T>::toList(List<T> & rtn)  const
 {
-	rtn.clear();
+	rtn.clear(true);
 	return toList(rtn, root);
 }
 
@@ -115,7 +115,7 @@ template <class T> TreeSet<T>& TreeSet<T>::operator=(const TreeSet<T> & right)
 
 /* Private wrapped functions */
 
-template <class T> int TreeSet<T>::add(T& data, bst_node<T> * root)
+template <class T> int TreeSet<T>::add(const T& data, bst_node<T> * root)
 {
 	if(NULL==root) // Case 1: root is a leaf
 	{
@@ -171,7 +171,7 @@ template <class T> bool TreeSet<T>::contains(T& item, bst_node<T> * root) const
 		else if(item > root->data) return contains(item, root->right);
 		else
 		{
-			item = root->item;
+			item = root->data;
 			return true;
 		}
 	}
@@ -184,7 +184,7 @@ template <class T> int TreeSet<T>::retrieve(char* srch, jnickg::adt::List<T>& rt
 	{
 		int num = retrieve(srch, rtn, root->left) + retrieve(srch, rtn, root->right);
 		T tmp;
-		if (root->data).retrieve(srch, tmp)
+		if ((root->data).retrieve(srch, tmp))
 		{
 			rtn.add_to_end(tmp);
 			num++;
@@ -253,7 +253,7 @@ template <class T> int TreeSet<T>::getceil(const T& t, T& rtn, bst_node<T> * roo
 	}
 }
 
-template <class T> int TreeSet<T>::getflr(const T& t, T& rtn bst_node<T> * root) const
+template <class T> int TreeSet<T>::getflr(const T& t, T& rtn, bst_node<T> * root) const
 {
 	// Case 1: no root
 	if(NULL==root) return 0;
@@ -309,7 +309,7 @@ template <class T> int TreeSet<T>::gethigher(const T& t, T& rtn, bst_node<T> * r
 	}
 }
 
-template <class T> int TreeSet<T>::getlower(const T& t, T& rtn bst_node<T> * root) const
+template <class T> int TreeSet<T>::getlower(const T& t, T& rtn, bst_node<T> * root) const
 {
 	// Case 1: no root
 	if(NULL==root) return 0;
@@ -359,7 +359,7 @@ template <class T> int TreeSet<T>::height(bst_node<T> * root) const
 	}
 }
 
-template <class T> int TreeSet<T>::copyfrom(bst_node<T> * & dest, bst_node<T> * src)
+template <class T> int TreeSet<T>::copyfrom(bst_node<T> * & destination, bst_node<T> * source)
 {
 	if(NULL==source)
 	{
@@ -369,9 +369,9 @@ template <class T> int TreeSet<T>::copyfrom(bst_node<T> * & dest, bst_node<T> * 
 	else
 	{
 		if(destination) delete destination;
-		destination = new bst_node;
+		destination = new bst_node<T>;
 		destination->data = source->data;
-		int cpy = copy(destination->left, source->left) + copy(destination->right, source->right);
+		int cpy = copyfrom(destination->left, source->left) + copyfrom(destination->right, source->right);
 		return 1 + cpy;
 	}
 }
@@ -381,7 +381,7 @@ template <class T> int TreeSet<T>::removeall(bst_node<T> * & root)
 	if(NULL==root) return 0;
 	else
 	{
-		int del = remove_all(root->left) + remove_all(root->right);
+		int del = removeall(root->left) + removeall(root->right);
 		delete root;
 		root = NULL;
 		return 1 + del;

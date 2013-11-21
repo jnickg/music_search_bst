@@ -181,6 +181,12 @@ template <class T> int List<T>::get_last(T & data)
 	else return 0;
 }
 
+template <class T> void List<T>::clear(bool really)
+{
+	if(really) clear();
+	else return;
+}
+
 template <class T> int List<T>::it_init() const
 {
 	if(!(head==NULL))

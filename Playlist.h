@@ -46,6 +46,8 @@ public:
 	std::ostream& print(std::ostream & out) const;
 
 	Playlist& operator=(const Playlist & right);
+	bool operator<(const Playlist & right) const;
+	bool operator>(const Playlist & right) const;
 	bool operator==(const Playlist & right) const;
 private:
 	char* title;

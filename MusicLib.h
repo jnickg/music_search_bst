@@ -7,15 +7,15 @@
 #include "Playlist.h"
 
 namespace jnickg { namespace adt {
-#ifndef BSTSTRUCT
-#define BSTSTRUCT
+#ifndef JNICKG_ADT_BSTSTRUCT
+#define JNICKG_ADT_BSTSTRUCT
 template <class T> struct bst_node
 {
 	T data;
 	node<T>* left;
 	node<T>* right;
 };
-#endif // BSTSTRUCT
+#endif // JNICKG_ADT_BSTSTRUCT
 }} // end namespace
 
 /* MUSIC LIBRARY

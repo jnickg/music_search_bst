@@ -68,6 +68,9 @@ public:
 	int get_head(T & data);
 	// Returns the final node in the List
 	int get_last(T & data);
+
+	// Clears it
+	void clear(bool really);
 	
 	// Returns 1 if it resets its iterator to the head of the List; 0 if head points to NULL
 	int it_init() const;
