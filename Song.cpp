@@ -161,6 +161,40 @@ Song& Song::operator=(const Song & right)
 	return *this;
 }
 
+bool Song::operator<(const Song & right) const
+{
+	int art, tit, alb; // Compares artist, title, and then album
+	art = strcmp(artist, right.artist);
+	if(art == 0)
+	{
+		tit = strcmp(title, right.title);
+		if(tit == 0)
+		{
+			alb = strcmp(album, right.album);
+			if(alb == 0) return false;
+			else if(alb < 0) return true;
+			else return false;
+		}
+		else if(tit < 0) return true;
+		else return false;
+	}
+	else if(art < 0)
+		return true;
+	else return false;
+}
+
+bool Song::operator>(const Song & right) const
+{
+	return (right<(*this));
+}
+
+bool Song::operator==(const Song & right) const
+{
+	if((*this) < right) return false;
+	else if(right < (*this)) return false;
+	else return true;
+}
+
 std::ostream& operator<<(std::ostream& out, const Song* const song)
 {
 	song->print(out);

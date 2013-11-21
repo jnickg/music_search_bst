@@ -54,6 +54,11 @@ public:
 	std::ostream& print(std::ostream & out) const;
 	// Calls copySong
 	Song& operator=(const Song & right);
+
+	// Simple boolean comparators--all implemented in terms of operator<
+	bool operator<(const Song & right) const;
+	bool operator>(const Song & right) const;
+	bool operator==(const Song & right) const;
 private:
 	char* title; // The title of the song
 	char* artist; // The artist who made the song
