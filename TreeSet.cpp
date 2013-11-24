@@ -115,7 +115,7 @@ template <class T> TreeSet<T>& TreeSet<T>::operator=(const TreeSet<T> & right)
 
 /* Private wrapped functions */
 
-template <class T> int TreeSet<T>::add(const T& data, bst_node<T> * root)
+template <class T> int TreeSet<T>::add(const T& data, bst_node<T> *& root)
 {
 	if(NULL==root) // Case 1: root is a leaf
 	{
@@ -136,7 +136,7 @@ template <class T> int TreeSet<T>::add(const T& data, bst_node<T> * root)
 	}
 }
 
-template <class T> int TreeSet<T>::put(T& data, bst_node<T> * root)
+template <class T> int TreeSet<T>::put(T& data, bst_node<T> *& root)
 {
 	if(NULL==root) // Case 1: root is a leaf
 	{
@@ -149,9 +149,9 @@ template <class T> int TreeSet<T>::put(T& data, bst_node<T> * root)
 	else // Case 2: root contains data
 	{
 		// Add to the left of root
-		if(data<(root->data)) return add(data, root->left);
+		if(data<(root->data)) return put(data, root->left);
 		// Add to the right of root
-		else if(data>(root->data)) return add(data, root->right);
+		else if(data>(root->data)) return put(data, root->right);
 		// Already here; do not add to the set
 		else if(data==(root->data))
 		{
@@ -368,7 +368,6 @@ template <class T> int TreeSet<T>::copyfrom(bst_node<T> * & destination, bst_nod
 	}
 	else
 	{
-		if(destination) delete destination;
 		destination = new bst_node<T>;
 		destination->data = source->data;
 		int cpy = copyfrom(destination->left, source->left) + copyfrom(destination->right, source->right);

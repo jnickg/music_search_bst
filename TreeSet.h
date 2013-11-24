@@ -118,9 +118,9 @@ private:
 	/* Primary wrapped functions */
 
 	// Adds data appropriately below root
-	int add(const T& data, bst_node<T> * root);
+	int add(const T& data, bst_node<T> *& root);
 	// Adds data regardless of whether something was already there
-	int put(T& data, bst_node<T> * root);
+	int put(T& data, bst_node<T> *& root);
 	// Checks if the TreeSet contains item and sets item to it
 	bool contains(T& item, bst_node<T> * root) const;
 	// Copies to rtn all retrieved items from the search string in postorder

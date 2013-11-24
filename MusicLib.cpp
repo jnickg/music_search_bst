@@ -39,18 +39,21 @@ int MusicLib::addtoPlaylist(Song & song, char* playlist)
 // Searches for artist and copies existing albums to result
 int MusicLib::getByArtist(char* artist, jnickg::adt::List<Song> & result)
 {
+	result.clear(true);
 	return songs.retrieve(artist, result);
 }
 
 // Searches for album and copies existing songs to result
 int MusicLib::getByAlbum(char* album, jnickg::adt::List<Song> & result)
 {
+	result.clear(true);
 	return songs.retrieve(album, result);
 }
 
 // Searches for playlist and copies existing songs to result
 int MusicLib::getByPlaylist(char* playlist, jnickg::adt::List<Song> & result)
 {
+	result.clear(true);
 	int rtn = 0;
 	Playlist pl(playlist);
 	if(playlists.contains(pl))
