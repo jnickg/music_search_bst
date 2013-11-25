@@ -14,7 +14,7 @@ Created 10 Nov 2013
 
 This class contains information for a music Playlist:
 	The name of the Playlist
-	A list of the songs in the playlist
+	A Tree Set of the songs in the playlist
 */
 
 class Playlist

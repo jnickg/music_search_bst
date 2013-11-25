@@ -55,10 +55,10 @@ public:
 	int getByPlaylist(char * playlist, jnickg::adt::List<Song> & result);
 private:
 	char* name;
+
 	/* Hash Tables */
 	jnickg::adt::TreeSet<Song> songs;
 	jnickg::adt::TreeSet<Playlist> playlists;
-	
 };
 
 #endif

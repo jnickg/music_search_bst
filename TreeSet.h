@@ -28,17 +28,26 @@ template <class T> struct bst_node
 
 /*	TreeSet (Binary Search Tree)
 	
-	Description
+	A naturally-ordered set of data, which can be sent to a
+	jnickg::adt::List<T> and can provide a number of functions
+	on the data
 
-	Requires that class T has the following
+	Requires that class type T has the following
 	implementations:
+		
+		operator<
+		
+		operator>
+		
+		operator=
+		
+		operator<<
+		
+		operator==
 
-	operator<
-	operator>
-	operator=
-	operator<<
-	operator==
-	retrieve(char* search, T& item) const
+		// Use search string and, if it's a match,
+		//data is copied to item
+		retrieve(char* search, T& item) const
 
 */
 
